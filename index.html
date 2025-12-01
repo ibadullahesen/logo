@@ -10,18 +10,21 @@
         h1 { font-size: 48px; margin:0; }
         p { font-size: 20px; opacity: 0.9; }
         input { padding: 18px; font-size: 28px; width: 180px; text-align:center; border:none; border-radius:12px; text-transform:uppercase; margin:20px 10px 0; }
-        button { padding: 18px 40px; font-size: 20px; background:#fff; color:#667eea; border:none; border-radius:12px; cursor:pointer; font-weight:bold; }
+        button { padding: 18px 40px; font-size: 20px; background:#fff; color:#667eea; border:none; border-radius:12px; cursor:pointer; font-weight:bold; margin: 0 5px; }
         button:hover { background:#f0f0f0; }
         .logos { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:30px; margin-top:60px; }
-        img { width:100%; border-radius:20px; box-shadow:0 15px 35px rgba(0,0,0,0.3); transition:0.3s; border:5px solid rgba(255,255,255,0.2); }
-        img:hover { transform:scale(1.05); }
+        .logo-item { position: relative; }
+        svg { width:100%; height:240px; border-radius:20px; box-shadow:0 15px 35px rgba(0,0,0,0.3); border:5px solid rgba(255,255,255,0.2); transition:0.3s; }
+        svg:hover { transform:scale(1.05); }
+        .download-btn { position: absolute; top:10px; right:10px; background:rgba(255,255,255,0.9); color:#667eea; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; display:none; }
+        .logo-item:hover .download-btn { display:block; }
         .loading { font-size: 24px; margin-top: 50px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Logo Yaradıcı</h1>
-        <p>2 hərf yaz, 12 gözəl logo pulsuz yaransın!</p>
+        <p>2 hərf yaz, 15 fərqli SVG logo pulsuz yaransın!</p>
         
         <input type="text" id="text" placeholder="IH" maxlength="4" autofocus>
         <button onclick="generate()">Yarat!</button>
@@ -32,24 +35,100 @@
     </div>
 
     <script>
-        const styles = ["minimal", "gradient", "3d", "neon", "bold", "glass", "retro", "abstract", "modern", "vintage", "outline", "stacked"];
+        const colors = [
+            {bg: '#ff6b6b', fg: '#fff'}, {bg: '#4ecdc4', fg: '#fff'}, {bg: '#45b7d1', fg: '#fff'}, {bg: '#f9ca24', fg: '#000'},
+            {bg: '#6c5ce7', fg: '#fff'}, {bg: '#a29bfe', fg: '#000'}, {bg: '#fd79a8', fg: '#fff'}, {bg: '#1dd1a1', fg: '#000'},
+            {bg: '#ff9ff3', fg: '#000'}, {bg: '#feca57', fg: '#000'}, {bg: '#48dbfb', fg: '#000'}, {bg: '#ff9f43', fg: '#fff'},
+            {bg: '#00d2d3', fg: '#fff'}, {bg: '#54a0ff', fg: '#fff'}, {bg: '#5f27cd', fg: '#fff'}
+        ];
+
+        const styles = [
+            {name: 'minimal', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20"/> <text x="50%" y="55%" font-family="Arial Black" font-size="120" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'gradient', draw: (svg, text, color) => {
+                svg.innerHTML = `<defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${color.bg};stop-opacity:1" /><stop offset="100%" style="stop-color:${color.fg};stop-opacity:1" /></linearGradient></defs> <rect width="100%" height="100%" fill="url(#grad1)" rx="20"/> <text x="50%" y="55%" font-family="Arial Black" font-size="120" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'circle', draw: (svg, text, color) => {
+                svg.innerHTML = `<circle cx="50%" cy="50%" r="50%" fill="${color.bg}"/> <text x="50%" y="52%" font-family="Arial Black" font-size="100" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text> <circle cx="50%" cy="50%" r="48%" fill="none" stroke="${color.fg}" stroke-width="4"/>`;
+            }},
+            {name: 'hexagon', draw: (svg, text, color) => {
+                const points = "50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%";
+                svg.innerHTML = `<polygon points="${points}" fill="${color.bg}"/> <text x="50%" y="55%" font-family="Arial Black" font-size="100" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'neon', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="black" rx="20"/> <text x="50%" y="55%" font-family="Arial Black" font-size="140" fill="url(#glow)" text-anchor="middle" dominant-baseline="middle" filter="url(#glow)">${text}</text> <defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge> <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter> <radialGradient id="glow" cx="50%" cy="50%"><stop offset="0%" stop-color="${color.fg}" stop-opacity="1"/><stop offset="100%" stop-color="${color.fg}" stop-opacity="0"/></radialGradient></defs>`;
+            }},
+            {name: 'bold', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20"/> <text x="50%" y="55%" font-family="Arial Black" font-size="140" font-weight="bold" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle" stroke="${color.fg}" stroke-width="2">${text}</text>`;
+            }},
+            {name: 'retro', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20" stroke="#000" stroke-width="4"/> <text x="50%" y="55%" font-family="Courier New" font-size="110" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: '3d', draw: (svg, text, color) => {
+                svg.innerHTML = `<defs><filter id="shadow"><feDropShadow dx="5" dy="5" stdDeviation="3"/></filter></defs> <rect width="100%" height="100%" fill="${color.bg}" rx="20" filter="url(#shadow)"/> <text x="50%" y="55%" font-family="Arial Black" font-size="120" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle" filter="url(#shadow)">${text}</text>`;
+            }},
+            {name: 'glass', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20" opacity="0.8" stroke="${color.fg}" stroke-width="2"/> <text x="50%" y="55%" font-family="Arial" font-size="110" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'outline', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="none" stroke="${color.bg}" stroke-width="8" rx="20"/> <text x="50%" y="55%" font-family="Arial Black" font-size="120" fill="${color.bg}" text-anchor="middle" dominant-baseline="middle" stroke="none">${text}</text>`;
+            }},
+            {name: 'stacked', draw: (svg, text, color) => {
+                const [char1, char2] = text.split('');
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20"/> <text x="50%" y="40%" font-family="Arial Black" font-size="80" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${char1}</text> <text x="50%" y="70%" font-family="Arial Black" font-size="80" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${char2}</text>`;
+            }},
+            {name: 'abstract', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20"/> <path d="M0 0 Q50% 100% 100% 0" fill="${color.fg}" opacity="0.3"/> <text x="50%" y="55%" font-family="Arial Black" font-size="110" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'modern', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect x="0" y="0" width="100%" height="50%" fill="${color.bg}"/> <rect x="0" y="50%" width="100%" height="50%" fill="${color.fg}"/> <text x="50%" y="55%" font-family="Arial Black" font-size="100" fill="${color.bg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'vintage', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" fill="${color.bg}" rx="20" stroke="#8B4513" stroke-width="3"/> <text x="50%" y="55%" font-family="serif" font-size="110" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }},
+            {name: 'rounded', draw: (svg, text, color) => {
+                svg.innerHTML = `<rect width="100%" height="100%" rx="40" ry="40" fill="${color.bg}"/> <text x="50%" y="55%" font-family="Arial Black" font-size="120" fill="${color.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>`;
+            }}
+        ];
+
+        function downloadSVG(svg, filename) {
+            const svgData = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([svgData], {type: 'image/svg+xml'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
         function generate() {
             const text = (document.getElementById("text").value || "IH").toUpperCase().slice(0,4);
             const container = document.getElementById("result");
-            container.innerHTML = '<div class="loading">✨ Biraz gözləyin, gözəl logo'lar gəlir...</div>';
+            container.innerHTML = '<div class="loading">✨ Logo\'lar yaradılır...</div>';
 
             let html = "";
-            for(let i = 0; i < 12; i++) {
-                const style = styles[i];
-                const seed = Math.floor(Math.random()*10000);
-                const url = `https://logo.prompt-h.com/api?text=${text}&style=${style}&seed=${seed}&size=512`;
-                html += `<img src="${url}" alt="Logo ${i+1}" loading="lazy" onerror="this.src='https://via.placeholder.com/512/667eea/ffffff?text=${text}'">`;
-            }
+            styles.forEach((style, i) => {
+                const color = colors[i % colors.length];
+                html += `<div class="logo-item">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Stil buradadır -->
+                    </svg>
+                    <button class="download-btn" onclick="downloadSVG(this.parentNode.querySelector('svg'), '${text}-${style.name}.svg')">Endir</button>
+                    <p>${style.name.toUpperCase()}</p>
+                </div>`;
+            });
             container.innerHTML = html;
+
+            // Hər SVG-yə stil tətbiq et
+            styles.forEach((style, i) => {
+                const svg = container.children[i].querySelector('svg');
+                style.draw(svg, text, color);
+            });
         }
 
-        // Sayt açılan kimi avtomatik IH yaratsın
+        // Avtomatik yarat
         window.onload = generate;
     </script>
 </body>
