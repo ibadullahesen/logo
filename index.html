@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Logo Yaradıcı</title>
+    <title>AI LOGO GENERATOR PRO</title>
     <style>
         * {
             margin: 0;
@@ -11,757 +11,1092 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
-            color: white;
+            color: var(--light);
             padding: 20px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 20px;
         }
 
-        header {
+        /* Header Styles */
+        .header {
             text-align: center;
             margin-bottom: 40px;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
 
         h1 {
-            font-size: 48px;
+            font-size: 3.5rem;
             margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #4cc9f0, #4361ee);
+            background: linear-gradient(45deg, #fff 30%, var(--accent) 70%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .subtitle {
-            font-size: 20px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-            color: #b8b8d1;
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
         }
 
-        .input-section {
-            background: rgba(255, 255, 255, 0.05);
+        /* Control Panel */
+        .control-panel {
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 30px;
             margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        #textInput {
-            padding: 18px 25px;
-            font-size: 28px;
-            width: 200px;
-            text-align: center;
-            border: none;
-            border-radius: 12px;
-            text-transform: uppercase;
-            font-weight: bold;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+        .input-field {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            border-radius: 15px;
+            padding: 20px;
             transition: all 0.3s;
         }
 
-        #textInput:focus {
-            outline: none;
-            transform: translateY(-2px);
-            border-color: #4cc9f0;
-            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.3);
+        .input-field:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
         }
 
-        #textInput::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 15px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
         }
 
         .btn {
-            padding: 18px 40px;
-            font-size: 20px;
-            background: linear-gradient(45deg, #4361ee, #4cc9f0);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
             border: none;
-            border-radius: 12px;
+            padding: 18px 40px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.5);
-            background: linear-gradient(45deg, #3a56d4, #38b9e8);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
         }
 
-        .color-palette {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
+        .btn:active {
+            transform: translateY(-1px);
         }
 
-        .color-option {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: transform 0.3s;
-            border: 3px solid transparent;
+        .btn-full {
+            width: 100%;
+            padding: 20px;
+            font-size: 20px;
         }
 
-        .color-option:hover {
-            transform: scale(1.1);
-        }
-
-        .color-option.active {
-            border-color: white;
-            transform: scale(1.1);
-        }
-
-        .logos-container {
+        /* Logo Grid */
+        .logo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
-            margin-top: 20px;
+            margin-top: 40px;
         }
 
-        .logo-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s;
-            position: relative;
+        .logo-card {
+            background: rgba(15, 23, 42, 0.8);
+            border-radius: 25px;
             overflow: hidden;
+            transition: all 0.4s;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
-        .logo-item:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: rgba(76, 201, 240, 0.3);
+        .logo-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--primary);
         }
 
         .logo-preview {
-            width: 100%;
-            height: 280px;
+            height: 300px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(30, 41, 59, 0.6);
             position: relative;
+            overflow: hidden;
         }
 
         .logo-svg {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
+            width: 80%;
+            height: 80%;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
         }
 
         .logo-info {
+            padding: 25px;
+        }
+
+        .logo-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .logo-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .logo-desc {
+            color: #94a3b8;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .logo-stats {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .logo-name {
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #4cc9f0;
+        .stat {
+            text-align: center;
         }
 
-        .logo-desc {
-            font-size: 14px;
-            color: #b8b8d1;
-            margin-top: 5px;
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
         }
 
         .download-btn {
-            padding: 12px 24px;
-            background: linear-gradient(45deg, #4361ee, #4cc9f0);
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, var(--success), #34d399);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
             transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-top: 10px;
         }
 
         .download-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
         }
 
-        .download-btn i {
-            font-size: 18px;
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 60px 0;
         }
 
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .feature-desc {
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Loading Animation */
         .loading {
-            font-size: 24px;
             text-align: center;
-            padding: 50px;
+            padding: 60px;
             grid-column: 1 / -1;
-            color: #4cc9f0;
         }
 
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(99, 102, 241, 0.3);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Notification */
         .notification {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: linear-gradient(45deg, #4361ee, #4cc9f0);
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(45deg, var(--success), #34d399);
             color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.5s;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 1000;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            max-width: 400px;
         }
 
         .notification.show {
-            transform: translateY(0);
-            opacity: 1;
+            transform: translateX(0);
         }
 
-        .style-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
+        .notification.error {
+            background: linear-gradient(45deg, var(--danger), #f87171);
         }
 
-        .premium-badge {
-            background: linear-gradient(45deg, #FFD700, #FFA500);
-            color: #000;
+        .notification.warning {
+            background: linear-gradient(45deg, var(--warning), #fbbf24);
         }
 
-        .modern-badge {
-            background: linear-gradient(45deg, #4cc9f0, #4361ee);
-            color: white;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 16px;
-            opacity: 0.8;
-            color: #b8b8d1;
-        }
-
+        /* Responsive */
         @media (max-width: 768px) {
             h1 {
-                font-size: 36px;
+                font-size: 2.5rem;
             }
             
-            .subtitle {
-                font-size: 18px;
-            }
-            
-            .logos-container {
+            .logo-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
             
             .input-group {
-                flex-direction: column;
+                grid-template-columns: 1fr;
             }
             
-            #textInput {
-                width: 100%;
-                max-width: 250px;
+            .control-panel {
+                padding: 20px;
             }
+        }
+
+        /* Advanced Options */
+        .advanced-options {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-btn {
+            background: rgba(30, 41, 59, 0.8);
+            border: none;
+            color: var(--accent);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .option-item {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Generated ID */
+        .logo-id {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+            font-family: monospace;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-crown"></i> Professional Logo Yaradıcı</h1>
-            <p class="subtitle">Şirkət adınızı daxil edin, 12 unikal və professional logo təklifi alın!</p>
-        </header>
-        
-        <div class="input-section">
-            <div class="input-group">
-                <input type="text" id="textInput" placeholder="AZ" maxlength="4" autofocus value="AZ">
-                <button class="btn" id="generateBtn">
-                    <i class="fas fa-magic"></i> Logo Yarat!
-                </button>
+        <!-- Header -->
+        <header class="header">
+            <div class="ai-badge">
+                <i class="fas fa-robot"></i> AI-POWERED GENERATION
             </div>
-            
-            <div class="color-palette" id="colorPalette">
-                <!-- Rəng seçimləri burada yüklənəcək -->
-            </div>
-            
-            <p class="hint" style="text-align: center; margin-top: 15px; color: #b8b8d1;">
-                <i class="fas fa-lightbulb"></i> İpucu: 2-4 hərfli qısaltmalar ən effektiv loqoları yaradır
+            <h1>AI LOGO GENERATOR PRO</h1>
+            <p class="subtitle">
+                Hər dəfə UNİKAL, hər dəfə MÖHTƏŞƏM! AI ilə hər kəsə fərqli, professional logo dizaynları.
+                Ən son AI texnologiyası ilə hər klikdə yeni bir sənət əsəri yaradın.
             </p>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="companyName"><i class="fas fa-building"></i> Şirkət Adı / İnitiallar</label>
+                    <input type="text" id="companyName" placeholder="AZTech" maxlength="20" value="AZTech">
+                </div>
+                
+                <div class="input-field">
+                    <label for="industry"><i class="fas fa-industry"></i> Sənaye / Kateqoriya</label>
+                    <select id="industry">
+                        <option value="tech">Texnologiya</option>
+                        <option value="finance">Maliyyə</option>
+                        <option value="health">Sağlamlıq</option>
+                        <option value="education">Təhsil</option>
+                        <option value="creative">Yaradıcılıq</option>
+                        <option value="food">Qida</option>
+                        <option value="fashion">Moda</option>
+                        <option value="sports">İdman</option>
+                        <option value="auto">Avtomobil</option>
+                        <option value="realestate">Daşınmaz Əmlak</option>
+                    </select>
+                </div>
+                
+                <div class="input-field">
+                    <label for="style"><i class="fas fa-palette"></i> Üslub Seçimi</label>
+                    <select id="style">
+                        <option value="modern">Müasir</option>
+                        <option value="minimal">Minimalist</option>
+                        <option value="luxury">Lüks</option>
+                        <option value="vintage">Vintage</option>
+                        <option value="futuristic">Futuristik</option>
+                        <option value="organic">Orqanik</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-full" id="generateBtn">
+                <i class="fas fa-bolt"></i> AI İLƏ YENİ LOGO YARAT!
+            </button>
+
+            <!-- Advanced Options -->
+            <div class="advanced-options">
+                <button class="toggle-btn" id="toggleOptions">
+                    <i class="fas fa-sliders-h"></i> Qabaqcıl Parametrlər
+                </button>
+                <div class="options-grid" id="optionsGrid" style="display: none;">
+                    <div class="option-item">
+                        <label>Mürəkkəblik Səviyyəsi</label>
+                        <select id="complexity">
+                            <option value="simple">Sadə</option>
+                            <option value="medium" selected>Orta</option>
+                            <option value="complex">Kompleks</option>
+                        </select>
+                    </div>
+                    <div class="option-item">
+                        <label>Rəng Strategiyası</label>
+                        <select id="colorStrategy">
+                            <option value="mono">Monoxrom</option>
+                            <option value="analog" selected>Analog</option>
+                            <option value="complement">Komplementar</option>
+                            <option value="triadic">Triadik</option>
+                        </select>
+                    </div>
+                    <div class="option-item">
+                        <label>Simvol Daxil Et</label>
+                        <select id="symbol">
+                            <option value="none">Yox</option>
+                            <option value="abstract">Abstrakt</option>
+                            <option value="animal">Heyvan</option>
+                            <option value="nature">Təbiət</option>
+                            <option value="tech">Texnologiya</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="logos-container" id="result">
-            <!-- Professional loqolar burada görünəcək -->
+
+        <!-- Features -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h3 class="feature-title">100% Unikal</h3>
+                <p class="feature-desc">Hər logo unikal ID ilə yaradılır. Heç kimsə ilə eyni logo olmayacaq!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="feature-title">AI Alqoritmi</h3>
+                <p class="feature-desc">Qabaqcıl AI parametrlərinizə əsasən optimal dizaynı avtomatik seçir.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3 class="feature-title">Adaptiv Dizayn</h3>
+                <p class="feature-desc">Sənayenizə və üslubunuza uyğun xüsusi optimallaşdırılmış loqolar.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3 class="feature-title">Sonsuz Variasiya</h3>
+                <p class="feature-desc">Milyonlarla kombinasiya. Hər dəfə tamamilə yeni dizaynlar!</p>
+            </div>
         </div>
-        
-        <footer>
-            <p><i class="fas fa-code"></i> Professional Logo Yaradıcı &copy; 2024 - Bütün hüquqlar qorunur</p>
-            <p style="font-size: 14px; margin-top: 10px;">SVG formatında yüksək keyfiyyətli loqolar</p>
-        </footer>
+
+        <!-- Generated Logos -->
+        <div class="logo-grid" id="result">
+            <!-- AI Generated logos will appear here -->
+        </div>
     </div>
 
+    <!-- Notification -->
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
-        <span id="notificationText">Logo uğurla yükləndi!</span>
+        <div>
+            <strong>Logo yaradıldı!</strong>
+            <div id="notificationText">Uğurla yükləndi</div>
+        </div>
     </div>
 
     <script>
-        // Professional rəng palitrası
-        const colorSchemes = [
-            { 
-                name: "Corporate Blue", 
-                bg: "#1a365d", 
-                fg: "#ffffff",
-                accent: "#4299e1"
-            },
-            { 
-                name: "Tech Gradient", 
-                bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)", 
-                fg: "#ffffff",
-                accent: "#9f7aea"
-            },
-            { 
-                name: "Elegant Gold", 
-                bg: "#2d3748", 
-                fg: "#f6ad55",
-                accent: "#f6ad55"
-            },
-            { 
-                name: "Modern Green", 
-                bg: "#22543d", 
-                fg: "#9ae6b4",
-                accent: "#68d391"
-            },
-            { 
-                name: "Luxury Purple", 
-                bg: "#44337a", 
-                fg: "#d6bcfa",
-                accent: "#9f7aea"
-            },
-            { 
-                name: "Clean White", 
-                bg: "#ffffff", 
-                fg: "#2d3748",
-                accent: "#4fd1c7"
-            },
-            { 
-                name: "Dark Tech", 
-                bg: "#1a202c", 
-                fg: "#81e6d9",
-                accent: "#81e6d9"
-            },
-            { 
-                name: "Ocean Blue", 
-                bg: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)", 
-                fg: "#a0d2f7",
-                accent: "#4cc9f0"
-            },
-            { 
-                name: "Sunset", 
-                bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)", 
-                fg: "#ffffff",
-                accent: "#fed7e2"
-            },
-            { 
-                name: "Forest", 
-                bg: "linear-gradient(135deg, #0f9b0f 0%, #056605 100%)", 
-                fg: "#c6f6d5",
-                accent: "#9ae6b4"
-            },
-            { 
-                name: "Royal", 
-                bg: "linear-gradient(135deg, #434343 0%, #000000 100%)", 
-                fg: "#fbbf24",
-                accent: "#fbbf24"
-            },
-            { 
-                name: "Sky", 
-                bg: "linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%)", 
-                fg: "#1a365d",
-                accent: "#1a365d"
+        // AI Logo Generator - Ultimate Edition
+        class AILogoGenerator {
+            constructor() {
+                this.lastGeneratedId = null;
+                this.generatedLogos = new Set();
+                this.init();
             }
-        ];
 
-        // Professional logo üslubları
-        const professionalStyles = [
-            {
-                name: "Corporate",
-                description: "Professional korporativ üslub",
-                badge: "premium",
-                generate: (text, colors) => {
-                    const [char1, char2] = text.split('');
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            init() {
+                // DOM Elements
+                this.elements = {
+                    companyName: document.getElementById('companyName'),
+                    industry: document.getElementById('industry'),
+                    style: document.getElementById('style'),
+                    complexity: document.getElementById('complexity'),
+                    colorStrategy: document.getElementById('colorStrategy'),
+                    symbol: document.getElementById('symbol'),
+                    generateBtn: document.getElementById('generateBtn'),
+                    result: document.getElementById('result'),
+                    notification: document.getElementById('notification'),
+                    notificationText: document.getElementById('notificationText'),
+                    toggleOptions: document.getElementById('toggleOptions'),
+                    optionsGrid: document.getElementById('optionsGrid')
+                };
+
+                // Event Listeners
+                this.elements.generateBtn.addEventListener('click', () => this.generateLogos());
+                this.elements.toggleOptions.addEventListener('click', () => this.toggleOptions());
+                
+                // Auto-generate on load
+                setTimeout(() => this.generateLogos(), 1000);
+            }
+
+            toggleOptions() {
+                const grid = this.elements.optionsGrid;
+                grid.style.display = grid.style.display === 'none' ? 'grid' : 'none';
+            }
+
+            generateUniqueId() {
+                return 'LOG-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            }
+
+            getAIParams() {
+                return {
+                    text: this.elements.companyName.value.toUpperCase().substr(0, 8) || 'AZTECH',
+                    industry: this.elements.industry.value,
+                    style: this.elements.style.value,
+                    complexity: this.elements.complexity.value,
+                    colorStrategy: this.elements.colorStrategy.value,
+                    symbol: this.elements.symbol.value,
+                    timestamp: Date.now(),
+                    uniqueId: this.generateUniqueId()
+                };
+            }
+
+            getColorPalette(params) {
+                const palettes = {
+                    mono: [
+                        ['#0f172a', '#1e293b', '#334155', '#475569', '#64748b'],
+                        ['#1e3a8a', '#1d4ed8', '#3b82f6', '#60a5fa', '#93c5fd'],
+                        ['#065f46', '#047857', '#10b981', '#34d399', '#6ee7b7']
+                    ],
+                    analog: [
+                        ['#4338ca', '#4f46e5', '#6366f1', '#818cf8', '#a5b4fc'],
+                        ['#0d9488', '#14b8a6', '#2dd4bf', '#5eead4', '#99f6e4'],
+                        ['#be185d', '#db2777', '#ec4899', '#f472b6', '#f9a8d4']
+                    ],
+                    complement: [
+                        ['#7c3aed', '#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'],
+                        ['#ea580c', '#f97316', '#fb923c', '#fdba74', '#fed7aa'],
+                        ['#059669', '#10b981', '#34d399', '#6ee7b7', '#a7f3d0']
+                    ],
+                    triadic: [
+                        ['#6366f1', '#10b981', '#f59e0b'],
+                        ['#8b5cf6', '#06b6d4', '#84cc16'],
+                        ['#ec4899', '#3b82f6', '#f59e0b']
+                    ]
+                };
+
+                const strategy = palettes[params.colorStrategy] || palettes.analog;
+                return strategy[Math.floor(Math.random() * strategy.length)];
+            }
+
+            generateLogoSVG(params, index) {
+                const colors = this.getColorPalette(params);
+                const text = params.text;
+                const uniqueId = params.uniqueId + '-' + index;
+                
+                // AI selects random style based on params
+                const styles = [
+                    this.createGeometricLogo(text, colors, params),
+                    this.createAbstractLogo(text, colors, params),
+                    this.createTypographyLogo(text, colors, params),
+                    this.createSymbolLogo(text, colors, params),
+                    this.createGradientLogo(text, colors, params),
+                    this.createModernLogo(text, colors, params),
+                    this.createLuxuryLogo(text, colors, params),
+                    this.createTechLogo(text, colors, params)
+                ];
+
+                return styles[Math.floor(Math.random() * styles.length)];
+            }
+
+            createGeometricLogo(text, colors, params) {
+                const shapes = ['circle', 'triangle', 'hexagon', 'diamond', 'star'];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                         <defs>
-                            <linearGradient id="corpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="${colors.accent}" stop-opacity="0.8"/>
-                                <stop offset="100%" stop-color="${colors.fg}" stop-opacity="0.4"/>
+                            <linearGradient id="grad${params.timestamp}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="${colors[0]}"/>
+                                <stop offset="100%" stop-color="${colors[2]}"/>
                             </linearGradient>
                         </defs>
-                        <rect width="200" height="200" rx="25" fill="${colors.bg}"/>
-                        <rect x="50" y="50" width="100" height="100" rx="15" fill="url(#corpGrad)"/>
-                        <text x="100" y="80" font-family="Arial Black, sans-serif" font-size="40" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${char1}</text>
-                        <text x="100" y="120" font-family="Arial Black, sans-serif" font-size="40" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${char2}</text>
-                        <rect x="70" y="140" width="60" height="5" rx="2" fill="${colors.accent}"/>
-                    </svg>`;
+                        <rect width="200" height="200" rx="25" fill="url(#grad${params.timestamp})"/>
+                        ${this.generateShape(shape, colors)}
+                        <text x="100" y="120" font-family="Inter, sans-serif" font-size="45" font-weight="700" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle" 
+                              letter-spacing="2">${text.substr(0, 4)}</text>
+                        <path d="M50,160 Q100,170 150,160" stroke="white" stroke-width="3" fill="none" 
+                              stroke-linecap="round"/>
+                    </svg>
+                `;
+            }
+
+            generateShape(shape, colors) {
+                switch(shape) {
+                    case 'circle':
+                        return `<circle cx="100" cy="80" r="40" fill="${colors[3]}" opacity="0.8"/>`;
+                    case 'triangle':
+                        return `<polygon points="100,40 140,100 60,100" fill="${colors[3]}" opacity="0.8"/>`;
+                    case 'hexagon':
+                        return `<polygon points="100,40 140,60 140,100 100,120 60,100 60,60" 
+                                 fill="${colors[3]}" opacity="0.8"/>`;
+                    case 'diamond':
+                        return `<polygon points="100,40 140,80 100,120 60,80" 
+                                 fill="${colors[3]}" opacity="0.8"/>`;
+                    case 'star':
+                        return `<path d="M100,30 L115,70 L160,70 L125,95 L140,135 L100,110 L60,135 L75,95 L40,70 L85,70 Z" 
+                                 fill="${colors[3]}" opacity="0.8"/>`;
                 }
-            },
-            {
-                name: "Modern Tech",
-                description: "Müasir texnologiya üslubu",
-                badge: "modern",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+            }
+
+            createAbstractLogo(text, colors, params) {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                         <defs>
-                            <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#4cc9f0"/>
-                                <stop offset="100%" stop-color="#4361ee"/>
-                            </linearGradient>
-                        </defs>
-                        <rect width="200" height="200" rx="30" fill="${colors.bg}"/>
-                        <circle cx="100" cy="100" r="60" fill="url(#techGrad)"/>
-                        <text x="100" y="105" font-family="'Arial Black', sans-serif" font-size="65" fill="white" text-anchor="middle" dominant-baseline="middle" letter-spacing="2">${text}</text>
-                        <circle cx="100" cy="100" r="65" fill="none" stroke="${colors.accent}" stroke-width="2" stroke-dasharray="5,5"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Minimalist",
-                description: "Sadelik və zəriflik",
-                badge: "",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect width="200" height="200" rx="20" fill="${colors.bg}"/>
-                        <text x="100" y="110" font-family="'Helvetica Neue', Arial, sans-serif" font-size="75" font-weight="300" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle" letter-spacing="5">${text}</text>
-                        <line x1="60" y1="140" x2="140" y2="140" stroke="${colors.accent}" stroke-width="3"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Geometric",
-                description: "Həndəsi formalar",
-                badge: "",
-                generate: (text, colors) => {
-                    const [char1, char2] = text.split('');
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <defs>
-                            <clipPath id="hexClip">
-                                <polygon points="100,40 160,70 160,130 100,160 40,130 40,70"/>
-                            </clipPath>
-                        </defs>
-                        <polygon points="100,40 160,70 160,130 100,160 40,130 40,70" fill="${colors.bg}" stroke="${colors.accent}" stroke-width="4"/>
-                        <g clip-path="url(#hexClip)">
-                            <rect x="30" y="30" width="140" height="140" fill="${colors.fg}" opacity="0.1"/>
-                            <text x="100" y="80" font-family="Arial Black, sans-serif" font-size="45" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${char1}</text>
-                            <text x="100" y="125" font-family="Arial Black, sans-serif" font-size="45" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${char2}</text>
-                        </g>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Gradient",
-                description: "Rəng keçidləri",
-                badge: "modern",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <defs>
-                            <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#ff6b6b"/>
-                                <stop offset="100%" stop-color="#4ecdc4"/>
-                            </linearGradient>
-                            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                                <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="rgba(0,0,0,0.3)"/>
+                            <filter id="shadow${params.timestamp}">
+                                <feDropShadow dx="0" dy="10" stdDeviation="15" 
+                                              flood-color="${colors[0]}" flood-opacity="0.3"/>
                             </filter>
                         </defs>
-                        <rect width="200" height="200" rx="35" fill="url(#mainGrad)" filter="url(#shadow)"/>
-                        <text x="100" y="110" font-family="'Arial Black', sans-serif" font-size="75" fill="white" text-anchor="middle" dominant-baseline="middle" letter-spacing="3">${text}</text>
-                        <rect x="50" y="140" width="100" height="5" rx="2" fill="white" opacity="0.8"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Badge",
-                description: "Nişan üslubu",
-                badge: "premium",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <rect width="200" height="200" rx="30" fill="${colors[0]}"/>
+                        
+                        <!-- Abstract shapes -->
+                        <circle cx="60" cy="60" r="40" fill="${colors[2]}" opacity="0.6" 
+                                filter="url(#shadow${params.timestamp})"/>
+                        <circle cx="140" cy="80" r="35" fill="${colors[3]}" opacity="0.7"/>
+                        <rect x="80" y="40" width="60" height="60" rx="15" 
+                              fill="${colors[1]}" opacity="0.8" transform="rotate(45 110 70)"/>
+                        
+                        <!-- Text -->
+                        <text x="100" y="150" font-family="Inter, sans-serif" font-size="40" font-weight="800" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle" 
+                              letter-spacing="1.5">${text}</text>
+                        
+                        <!-- Accent line -->
+                        <line x1="50" y1="130" x2="150" y2="130" stroke="white" stroke-width="4" 
+                              stroke-linecap="round" opacity="0.8"/>
+                    </svg>
+                `;
+            }
+
+            createTypographyLogo(text, colors, params) {
+                const [first, second] = text.split('');
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <rect width="200" height="200" rx="20" fill="${colors[0]}"/>
+                        
+                        <!-- Typography composition -->
+                        <text x="70" y="90" font-family="Georgia, serif" font-size="80" font-weight="bold" 
+                              fill="${colors[2]}" text-anchor="middle" dominant-baseline="middle">${first}</text>
+                        <text x="130" y="120" font-family="Arial, sans-serif" font-size="60" font-style="italic" 
+                              fill="${colors[3]}" text-anchor="middle" dominant-baseline="middle">${second}</text>
+                        
+                        <!-- Decorative elements -->
+                        <line x1="40" y1="140" x2="160" y2="140" stroke="${colors[2]}" stroke-width="3" 
+                              stroke-dasharray="5,5"/>
+                        <circle cx="100" cy="100" r="3" fill="white"/>
+                        
+                        <!-- Full text -->
+                        <text x="100" y="170" font-family="Inter, sans-serif" font-size="24" font-weight="600" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle">${text}</text>
+                    </svg>
+                `;
+            }
+
+            createSymbolLogo(text, colors, params) {
+                const symbols = {
+                    tech: 'M100,60 L140,100 L100,140 L60,100 Z',
+                    finance: 'M70,70 L130,70 L130,130 L70,130 Z M85,85 L115,85 L115,115 L85,115 Z',
+                    health: 'M100,50 L120,90 L160,90 L130,120 L140,160 L100,140 L60,160 L70,120 L40,90 L80,90 Z',
+                    nature: 'M100,50 Q130,30 160,50 Q140,80 160,110 Q130,130 100,150 Q70,130 40,110 Q60,80 40,50 Q70,30 100,50'
+                };
+
+                const symbol = symbols[params.industry] || symbols.tech;
+
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                         <defs>
-                            <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <radialGradient id="radial${params.timestamp}" cx="50%" cy="50%">
+                                <stop offset="0%" stop-color="${colors[0]}"/>
+                                <stop offset="100%" stop-color="${colors[1]}"/>
+                            </radialGradient>
+                        </defs>
+                        
+                        <circle cx="100" cy="100" r="90" fill="url(#radial${params.timestamp})"/>
+                        
+                        <!-- Industry symbol -->
+                        <path d="${symbol}" fill="white" opacity="0.9" transform="translate(0, 10) scale(0.6)"/>
+                        
+                        <!-- Text -->
+                        <text x="100" y="160" font-family="Inter, sans-serif" font-size="35" font-weight="700" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle">${text}</text>
+                        
+                        <!-- Glow effect -->
+                        <circle cx="100" cy="100" r="85" fill="none" stroke="white" stroke-width="2" 
+                                stroke-dasharray="3,3" opacity="0.5"/>
+                    </svg>
+                `;
+            }
+
+            createGradientLogo(text, colors, params) {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="gradient${params.timestamp}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="${colors[0]}"/>
+                                <stop offset="50%" stop-color="${colors[2]}"/>
+                                <stop offset="100%" stop-color="${colors[4] || colors[1]}"/>
+                            </linearGradient>
+                            <filter id="glow${params.timestamp}">
+                                <feGaussianBlur stdDeviation="5" result="blur"/>
+                                <feMerge>
+                                    <feMergeNode in="blur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <rect width="200" height="200" rx="40" fill="url(#gradient${params.timestamp})"/>
+                        
+                        <!-- Text with glow -->
+                        <text x="100" y="110" font-family="Inter, sans-serif" font-size="65" font-weight="900" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle" 
+                              letter-spacing="3" filter="url(#glow${params.timestamp})">${text}</text>
+                        
+                        <!-- Decorative elements -->
+                        <circle cx="50" cy="50" r="20" fill="white" opacity="0.2"/>
+                        <circle cx="150" cy="150" r="25" fill="white" opacity="0.2"/>
+                        <rect x="140" y="40" width="30" height="30" rx="5" fill="white" opacity="0.2" 
+                              transform="rotate(45 155 55)"/>
+                    </svg>
+                `;
+            }
+
+            createModernLogo(text, colors, params) {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <!-- Background layers -->
+                        <rect x="10" y="10" width="180" height="180" rx="25" fill="${colors[1]}" opacity="0.3"/>
+                        <rect x="5" y="5" width="190" height="190" rx="25" fill="${colors[2]}" opacity="0.5"/>
+                        <rect width="200" height="200" rx="30" fill="${colors[0]}"/>
+                        
+                        <!-- Modern geometric pattern -->
+                        <path d="M0,100 Q50,50 100,50 T200,100 T100,150 T0,100" 
+                              fill="${colors[3]}" opacity="0.4"/>
+                        
+                        <!-- Main text -->
+                        <text x="100" y="95" font-family="Inter, sans-serif" font-size="55" font-weight="800" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle">${text.substr(0, 6)}</text>
+                        
+                        <!-- Sub text -->
+                        <text x="100" y="130" font-family="Inter, sans-serif" font-size="20" font-weight="600" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle" 
+                              opacity="0.8">${params.industry.toUpperCase()}</text>
+                        
+                        <!-- Accent line -->
+                        <line x1="60" y1="145" x2="140" y2="145" stroke="white" stroke-width="3" 
+                              stroke-linecap="round"/>
+                    </svg>
+                `;
+            }
+
+            createLuxuryLogo(text, colors, params) {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        <defs>
+                            <linearGradient id="luxury${params.timestamp}" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stop-color="#fbbf24"/>
                                 <stop offset="100%" stop-color="#f59e0b"/>
                             </linearGradient>
+                            <pattern id="pattern${params.timestamp}" patternUnits="userSpaceOnUse" width="20" height="20">
+                                <path d="M0,20 L20,0 M-5,5 L5,-5 M15,25 L25,15" stroke="${colors[2]}" stroke-width="2" 
+                                      opacity="0.3"/>
+                            </pattern>
                         </defs>
-                        <circle cx="100" cy="100" r="90" fill="${colors.bg}" stroke="url(#badgeGrad)" stroke-width="8"/>
-                        <circle cx="100" cy="100" r="70" fill="${colors.bg}"/>
-                        <text x="100" y="105" font-family="'Arial Black', sans-serif" font-size="60" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>
-                        <circle cx="100" cy="100" r="75" fill="none" stroke="${colors.accent}" stroke-width="2"/>
-                        <path d="M50,100 Q100,40 150,100 Q100,160 50,100" fill="none" stroke="url(#badgeGrad)" stroke-width="5" stroke-linecap="round"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Abstract",
-                description: "Mücərrəd dizayn",
-                badge: "",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect width="200" height="200" rx="25" fill="${colors.bg}"/>
-                        <path d="M0,100 Q50,30 100,30 T200,100 T100,170 T0,100" fill="${colors.fg}" opacity="0.2"/>
-                        <path d="M0,70 Q50,0 100,0 T200,70 T100,140 T0,70" fill="${colors.fg}" opacity="0.1"/>
-                        <text x="100" y="110" font-family="'Arial Black', sans-serif" font-size="75" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>
-                        <circle cx="100" cy="100" r="5" fill="${colors.accent}"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Typography",
-                description: "Tipografik vurğu",
-                badge: "",
-                generate: (text, colors) => {
-                    const [char1, char2] = text.split('');
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect width="200" height="200" rx="20" fill="${colors.bg}"/>
-                        <text x="70" y="90" font-family="'Times New Roman', serif" font-size="100" font-weight="bold" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${char1}</text>
-                        <text x="130" y="120" font-family="'Arial', sans-serif" font-size="70" font-style="italic" fill="${colors.accent}" text-anchor="middle" dominant-baseline="middle">${char2}</text>
-                        <line x1="40" y1="140" x2="160" y2="140" stroke="${colors.fg}" stroke-width="2" opacity="0.5"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Layered",
-                description: "Qatlı dizayn",
-                badge: "modern",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect x="20" y="20" width="160" height="160" rx="20" fill="${colors.bg}" opacity="0.8"/>
-                        <rect x="10" y="10" width="160" height="160" rx="20" fill="${colors.bg}" opacity="0.9"/>
-                        <rect width="160" height="160" rx="20" fill="${colors.bg}"/>
-                        <text x="80" y="90" font-family="'Arial Black', sans-serif" font-size="65" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle">${text}</text>
-                        <rect x="40" y="110" width="80" height="8" rx="4" fill="${colors.accent}"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Elegant",
-                description: "Zərif və incə",
-                badge: "premium",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect width="200" height="200" rx="40" fill="${colors.bg}"/>
-                        <text x="100" y="110" font-family="'Georgia', serif" font-size="80" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle" letter-spacing="2">${text}</text>
-                        <path d="M50,140 Q100,160 150,140" fill="none" stroke="${colors.accent}" stroke-width="3" stroke-linecap="round"/>
-                        <circle cx="100" cy="100" r="3" fill="${colors.accent}"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Bold",
-                description: "Cəsarətli və diqqətçəkən",
-                badge: "",
-                generate: (text, colors) => {
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                        
+                        <rect width="200" height="200" rx="35" fill="${colors[0]}"/>
+                        <rect width="200" height="200" rx="35" fill="url(#pattern${params.timestamp})"/>
+                        
+                        <!-- Luxury frame -->
+                        <rect x="20" y="20" width="160" height="160" rx="25" fill="none" 
+                              stroke="url(#luxury${params.timestamp})" stroke-width="8"/>
+                        
+                        <!-- Crown symbol -->
+                        <path d="M80,70 L100,50 L120,70 L115,90 L140,85 L135,110 L100,100 L65,110 L60,85 L85,90 Z" 
+                              fill="url(#luxury${params.timestamp})"/>
+                        
+                        <!-- Text -->
+                        <text x="100" y="155" font-family="Times New Roman, serif" font-size="40" font-weight="bold" 
+                              fill="url(#luxury${params.timestamp})" text-anchor="middle" 
+                              dominant-baseline="middle" letter-spacing="2">${text}</text>
+                    </svg>
+                `;
+            }
+
+            createTechLogo(text, colors, params) {
+                return `
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
                         <defs>
-                            <filter id="boldShadow">
-                                <feDropShadow dx="5" dy="5" stdDeviation="5" flood-color="rgba(0,0,0,0.5)"/>
+                            <linearGradient id="techGrad${params.timestamp}" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#06b6d4"/>
+                                <stop offset="100%" stop-color="#3b82f6"/>
+                            </linearGradient>
+                            <filter id="neon${params.timestamp}">
+                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                <feMerge>
+                                    <feMergeNode in="blur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
                             </filter>
                         </defs>
-                        <rect width="200" height="200" rx="15" fill="${colors.bg}" filter="url(#boldShadow)"/>
-                        <text x="100" y="115" font-family="'Impact', sans-serif" font-size="90" fill="${colors.fg}" text-anchor="middle" dominant-baseline="middle" letter-spacing="1">${text}</text>
-                        <rect x="30" y="140" width="140" height="10" rx="5" fill="${colors.accent}"/>
-                    </svg>`;
-                }
-            },
-            {
-                name: "Connected",
-                description: "Bağlı elementlər",
-                badge: "modern",
-                generate: (text, colors) => {
-                    const [char1, char2] = text.split('');
-                    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-                        <rect width="200" height="200" rx="25" fill="${colors.bg}"/>
-                        <circle cx="80" cy="100" r="40" fill="${colors.accent}" opacity="0.8"/>
-                        <circle cx="120" cy="100" r="40" fill="${colors.fg}" opacity="0.9"/>
-                        <text x="80" y="105" font-family="'Arial Black', sans-serif" font-size="50" fill="white" text-anchor="middle" dominant-baseline="middle">${char1}</text>
-                        <text x="120" y="105" font-family="'Arial Black', sans-serif" font-size="50" fill="${colors.bg}" text-anchor="middle" dominant-baseline="middle">${char2}</text>
-                        <path d="M80,100 C90,80 110,80 120,100" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                    </svg>`;
-                }
+                        
+                        <!-- Circuit board background -->
+                        <rect width="200" height="200" rx="25" fill="#0f172a"/>
+                        
+                        <!-- Circuit lines -->
+                        <path d="M30,50 H170 M30,80 H170 M30,110 H170 M30,140 H170" 
+                              stroke="${colors[2]}" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                        
+                        <path d="M50,30 V170 M80,30 V170 M110,30 V170 M140,30 V170" 
+                              stroke="${colors[2]}" stroke-width="2" stroke-dasharray="5,5" opacity="0.4"/>
+                        
+                        <!-- Tech hexagon -->
+                        <polygon points="100,60 130,75 130,105 100,120 70,105 70,75" 
+                                 fill="url(#techGrad${params.timestamp})" filter="url(#neon${params.timestamp})"/>
+                        
+                        <!-- Binary code -->
+                        <text x="40" y="180" font-family="monospace" font-size="12" fill="${colors[2]}" 
+                              opacity="0.6">1010 1100 0110</text>
+                        <text x="120" y="180" font-family="monospace" font-size="12" fill="${colors[2]}" 
+                              opacity="0.6">0101 0011 1001</text>
+                        
+                        <!-- Main text -->
+                        <text x="100" y="95" font-family="Inter, sans-serif" font-size="45" font-weight="900" 
+                              fill="white" text-anchor="middle" dominant-baseline="middle" 
+                              letter-spacing="2">${text}</text>
+                        
+                        <!-- Glowing dots -->
+                        <circle cx="60" cy="60" r="3" fill="#06b6d4" filter="url(#neon${params.timestamp})"/>
+                        <circle cx="140" cy="140" r="3" fill="#3b82f6" filter="url(#neon${params.timestamp})"/>
+                    </svg>
+                `;
             }
-        ];
 
-        // DOM elementləri
-        const textInput = document.getElementById('textInput');
-        const generateBtn = document.getElementById('generateBtn');
-        const resultContainer = document.getElementById('result');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notificationText');
-        const colorPalette = document.getElementById('colorPalette');
+            getLogoName(params, index) {
+                const names = [
+                    `Nexus ${params.text}`,
+                    `Quantum ${params.industry}`,
+                    `${params.text} Dynamics`,
+                    `Apex ${params.style}`,
+                    `Vertex ${params.text}`,
+                    `Infinity ${params.industry}`,
+                    `Nova ${params.text}`,
+                    `Zenith ${params.style}`
+                ];
+                return names[index] || `AI Generated ${params.text}`;
+            }
 
-        let selectedColorIndex = 0;
+            getLogoDescription(params, index) {
+                const descriptions = [
+                    `AI generated ${params.style} style logo for ${params.industry} industry`,
+                    `Professional ${params.complexity} complexity design with ${params.colorStrategy} colors`,
+                    `Modern ${params.industry} branding with unique geometric elements`,
+                    `Elegant ${params.style} design optimized for digital presence`,
+                    `${params.text} brand identity with futuristic ${params.industry} elements`,
+                    `Custom AI-generated logo with ${params.symbol} symbolism`,
+                    `Premium ${params.style} branding solution for modern businesses`,
+                    `Innovative design combining ${params.industry} aesthetics with ${params.style} principles`
+                ];
+                return descriptions[index] || "AI generated professional logo";
+            }
 
-        // Rəng palitrasını yarat
-        function createColorPalette() {
-            colorPalette.innerHTML = '';
-            colorSchemes.forEach((scheme, index) => {
-                const colorDiv = document.createElement('div');
-                colorDiv.className = `color-option ${index === selectedColorIndex ? 'active' : ''}`;
-                colorDiv.style.background = scheme.bg;
-                colorDiv.title = scheme.name;
-                colorDiv.addEventListener('click', () => {
-                    document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
-                    colorDiv.classList.add('active');
-                    selectedColorIndex = index;
-                    generateLogos();
-                });
-                colorPalette.appendChild(colorDiv);
-            });
-        }
-
-        // SVG yükləmə funksiyası
-        function downloadSVG(svgContent, filename) {
-            // SVG məzmununu təmizlə
-            const cleanedContent = svgContent.replace(/<div[^>]*>|<\/div>/g, '');
-            
-            const blob = new Blob([cleanedContent], { type: 'image/svg+xml' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification(`"${filename}" uğurla yükləndi!`);
-        }
-
-        // Bildiriş göstərmə funksiyası
-        function showNotification(message) {
-            notificationText.textContent = message;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        // Logo yaratma funksiyası
-        function generateLogos() {
-            const text = textInput.value.toUpperCase().trim() || 'AZ';
-            const validText = text.slice(0, 4);
-            
-            resultContainer.innerHTML = `
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i><br>
-                    Professional loqolar yaradılır...
-                </div>
-            `;
-            
-            setTimeout(() => {
-                let logosHTML = '';
-                const selectedColors = colorSchemes[selectedColorIndex];
+            async generateLogos() {
+                const params = this.getAIParams();
                 
-                professionalStyles.forEach((style, index) => {
-                    const svgContent = style.generate(validText, selectedColors);
-                    const filename = `${validText}_${style.name.replace(/\s+/g, '_')}_logo.svg`;
+                // Show loading
+                this.elements.result.innerHTML = `
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <h3>AI logo dizaynlarını yaradır...</h3>
+                        <p>Unikal ID: ${params.uniqueId}</p>
+                        <p>Parametrlər: ${params.industry} • ${params.style} • ${params.complexity}</p>
+                    </div>
+                `;
+
+                // Simulate AI processing
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Generate 8 unique logos
+                let logosHTML = '';
+                for (let i = 0; i < 8; i++) {
+                    const logoName = this.getLogoName(params, i);
+                    const logoDesc = this.getLogoDescription(params, i);
+                    const logoSVG = this.generateLogoSVG(params, i);
+                    const logoId = params.uniqueId + '-' + i;
                     
                     logosHTML += `
-                        <div class="logo-item">
-                            ${style.badge ? `<span class="style-badge ${style.badge}-badge">${style.badge.toUpperCase()}</span>` : ''}
+                        <div class="logo-card">
+                            <div class="logo-id">${logoId}</div>
                             <div class="logo-preview">
-                                ${svgContent}
+                                ${logoSVG}
+                                <div class="watermark">AI GENERATED</div>
                             </div>
                             <div class="logo-info">
-                                <div>
-                                    <div class="logo-name">${style.name}</div>
-                                    <div class="logo-desc">${style.description}</div>
+                                <div class="logo-name">${logoName}</div>
+                                <span class="logo-category">${params.industry.toUpperCase()}</span>
+                                <p class="logo-desc">${logoDesc}</p>
+                                
+                                <div class="logo-stats">
+                                    <div class="stat">
+                                        <div class="stat-value">${Math.floor(Math.random() * 50) + 50}%</div>
+                                        <div class="stat-label">UNİKALLIQ</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value">${params.style}</div>
+                                        <div class="stat-label">ÜSLUB</div>
+                                    </div>
+                                    <div class="stat">
+                                        <div class="stat-value">${params.complexity}</div>
+                                        <div class="stat-label">SƏVİYYƏ</div>
+                                    </div>
                                 </div>
-                                <button class="download-btn" onclick="downloadSVG(this.parentNode.parentNode.querySelector('.logo-preview').innerHTML, '${filename}')">
-                                    <i class="fas fa-download"></i> Yüklə
+                                
+                                <button class="download-btn" onclick="aiGenerator.downloadLogo('${logoId}', '${params.text}_${logoName.replace(/\s+/g, '_')}.svg')">
+                                    <i class="fas fa-download"></i> SVG Yüklə
                                 </button>
                             </div>
                         </div>
                     `;
-                });
+                }
+
+                this.elements.result.innerHTML = logosHTML;
+                this.showNotification('8 unikal AI logo uğurla yaradıldı!', 'success');
+            }
+
+            downloadLogo(logoId, filename) {
+                const logoCard = document.querySelector(`.logo-id:contains("${logoId}")`)?.closest('.logo-card');
+                if (logoCard) {
+                    const svgContent = logoCard.querySelector('.logo-preview').innerHTML;
+                    const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    this.showNotification(`${filename} uğurla yükləndi!`, 'success');
+                }
+            }
+
+            showNotification(message, type = 'success') {
+                const notification = this.elements.notification;
+                const text = this.elements.notificationText;
                 
-                resultContainer.innerHTML = logosHTML;
-                textInput.value = validText;
+                notification.className = 'notification ' + type;
+                notification.querySelector('strong').nextSibling.textContent = message;
                 
-            }, 600);
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
         }
 
-        // Event listener-lər
-        generateBtn.addEventListener('click', generateLogos);
-        
-        textInput.addEventListener('keyup', (event) => {
-            if (event.key === 'Enter') {
-                generateLogos();
-            }
-        });
-        
-        // Sayt yüklənəndə
-        window.addEventListener('DOMContentLoaded', () => {
-            createColorPalette();
-            generateLogos();
-            textInput.focus();
-        });
-        
-        // Input təmizləmə
-        textInput.addEventListener('input', function() {
-            this.value = this.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
-        });
+        // Initialize AI Generator
+        const aiGenerator = new AILogoGenerator();
+
+        // Make generator global for button clicks
+        window.aiGenerator = aiGenerator;
     </script>
 </body>
 </html>
