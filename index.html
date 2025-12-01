@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulsuz Logo Yaradıcı</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea, #764ba2); margin:0; padding:20px; min-height:100vh; color:white; }
+        .container { max-width: 1000px; margin: auto; text-align:center; padding-top: 50px; }
+        input { padding: 18px; font-size: 28px; width: 180px; text-align:center; border:none; border-radius:12px; text-transform:uppercase; }
+        button { padding: 18px 40px; font-size: 20px; background:#fff; color:#667eea; border:none; border-radius:12px; cursor:pointer; margin-left:15px; font-weight:bold; }
+        button:hover { background:#f0f0f0; }
+        .logos { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:25px; margin-top:50px; }
+        img { width:100%; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,0.4); transition:0.3s; }
+        img:hover { transform:scale(1.08); }
+        h1 { font-size: 46px; margin-bottom:10px; }
+        p { font-size:18px; opacity:0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Logo Yaradıcı</h1>
+        <p>2 hərf yaz, 15 fərqli logo pulsuz yaransın!</p>
+        
+        <input type="text" id="text" placeholder="IH" maxlength="4" autofocus>
+        <button onclick="generate()">Yarat!</button>
+
+        <div class="logos" id="result"></div>
+    </div>
+
+    <script>
+        const templates = [
+            "https://quickchart.io/logo-generator?text={text}&style=abstract&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=modern&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=vintage&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=gradient&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=minimal&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=3d&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=neon&background={color}&size=512",
+            "https://quickchart.io/logo-generator?text={text}&style=bold&background={color}&size=512",
+            "https://logo.dev/api/logo?text={text}&style=circle&color={color}",
+            "https://logo.dev/api/logo?text={text}&style=hexagon&color={color}",
+            "https://supalogo.com/api/generate?text={text}&style=random", // əlavə gözəl
+            "https://text-to-logo.com/api/logo?text={text}&style=glass",
+            "https://logo.dev/api/logo?text={text}&style=rounded&color={color}",
+            "https://logo.dev/api/logo?text={text}&style=shield&color={color}",
+            "https://quickchart.io/logo-generator?text={text}&style=retro&background={color}&size=512"
+        ];
+
+        const colors = ["ff6b6b","4ecdc4","45b7d1","f9ca24","6c5ce7","a29bfe","fd79a8","1dd1a1","ff9ff3","feca57","48dbfb","ff9f43","00d2d3","54a0ff","5f27cd","ff6348"];
+
+        function generate() {
+            const text = (document.getElementById("text").value || "IH").toUpperCase().slice(0,4);
+            const container = document.getElementById("result");
+            container.innerHTML = "<p>✨ Logo'lar yaradılır...</p>";
+
+            let html = "";
+            for(let i = 0; i < 15; i++) {
+                let url = templates[i % templates.length];
+                const color = colors[i % colors.length];
+                url = url.replace(/{text}/g, text).replace(/{color}/g, color);
+                html += `<img src="${url}" alt="Logo ${i+1}" loading="lazy">`;
+            }
+            container.innerHTML = html;
+        }
+
+        // İlk yüklənmədə avtomatik yarat
+        window.onload = () => generate();
+    </script>
+</body>
+</html>
